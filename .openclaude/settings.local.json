@@ -1,0 +1,16 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find D:/university-management/src -type f -name *.java)",
+      "Bash(ls:*)",
+      "Bash(./mvnw compile:*)",
+      "Bash(./mvnw spring-boot:run)",
+      "Bash(./mvnw clean:*)",
+      "Bash(./mvnw.cmd compile:*)",
+      "Bash(./mvnw.cmd spring-boot:run)",
+      "Bash(nslookup:*)",
+      "Bash(ping:*)",
+      "Bash(powershell -Command \"Test-NetConnection -ComputerName db.ucmwbabtctocrjodpdco.supabase.co -Port 5432 -WarningAction SilentlyContinue\" 2>&1)"
+    ]
+  }
+}
