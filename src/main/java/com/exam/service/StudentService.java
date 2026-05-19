@@ -1,12 +1,15 @@
 package com.exam.service;
 
-import com.exam.model.Student;
-import com.exam.model.Course;
-import com.exam.repository.StudentRepository;
-import com.exam.repository.CourseRepository;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.exam.model.Course;
+import com.exam.model.Student;
+import com.exam.repository.CourseRepository;
+import com.exam.repository.StudentRepository;
 
 @Service
 public class StudentService {
@@ -29,6 +32,7 @@ public class StudentService {
         return studentRepository.findById(id).orElse(null);
     }
 
+    @Transactional
     public void enrollStudent(Long studentId, Long courseId) {
         Student student = studentRepository.findById(studentId).orElse(null);
         Course course = courseRepository.findById(courseId).orElse(null);

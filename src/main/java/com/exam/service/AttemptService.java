@@ -1,12 +1,23 @@
 package com.exam.service;
 
-import com.exam.model.*;
-import com.exam.repository.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.exam.model.Attempt;
+import com.exam.model.Exam;
+import com.exam.model.Question;
+import com.exam.model.Result;
+import com.exam.model.Student;
+import com.exam.repository.AttemptRepository;
+import com.exam.repository.ExamRepository;
+import com.exam.repository.QuestionRepository;
+import com.exam.repository.ResultRepository;
+import com.exam.repository.StudentRepository;
 
 @Service
 public class AttemptService {
@@ -47,14 +58,19 @@ public class AttemptService {
         return attemptRepository.save(attempt);
     }
 
+    @Transactional
     public void saveAnswer(Long attemptId, Long questionId, String answer) {
         Attempt attempt = attemptRepository.findById(attemptId).orElse(null);
         if (attempt != null && "IN_PROGRESS".equals(attempt.getStatus())) {
+            if (attempt.getSubmittedAnswers() == null) {
+                attempt.setSubmittedAnswers(new HashMap<>());
+            }
             attempt.getSubmittedAnswers().put(questionId, answer);
             attemptRepository.save(attempt);
         }
     }
 
+    @Transactional
     public Result submitExam(Long attemptId) {
         Attempt attempt = attemptRepository.findById(attemptId).orElse(null);
         if (attempt == null) return null;
